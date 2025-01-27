@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dd385c8-0257-4845-b94d-b023bd8aa396" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Nice_to_have/How_to_connect_&amp;_from_pandas_to_sql.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Nice_to_have/spotify_songs.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/config/theme/custom.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/boiler/WidgetDummyCTk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dfgh.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +57,8 @@
       <recent name="C:\Users\Admin\Desktop\API_Projektwoche\src\util\boiler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Desktop\API_Projektwoche" />
+      <recent name="C:\Users\Admin\Desktop\API_Projektwoche\src" />
       <recent name="C:\Users\Admin\Desktop\API_Projektwoche\src\util" />
     </key>
   </component>
@@ -84,7 +80,7 @@
       <updated>1737155903815</updated>
       <workItem from="1737155905029" duration="41000" />
       <workItem from="1737157424681" duration="22000" />
-      <workItem from="1738003810798" duration="612000" />
+      <workItem from="1738003810798" duration="3085000" />
     </task>
     <servers />
   </component>
