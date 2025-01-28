@@ -1,2 +1,2 @@
-input ("Dienstagmorgen")
+input ("Dienstag")
 
