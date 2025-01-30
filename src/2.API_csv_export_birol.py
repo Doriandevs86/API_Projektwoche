@@ -7,15 +7,17 @@ api_key = '1tp7yPNOP31Gano9R+Vc3w==AXWMvVp68JudOYG1'
 url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 headers = {'Authorization': f'Bearer {api_key}'}
 
-num_facts = 500
-file_path = r'C:\Users\Admin\Documents\kursverlauf\07_Python_für_Datenanalysten\Tag_10\Tutorium\Krypto\API_Projektwoche\src\util\fakten.csv'
-file_exists = os.path.exists(file_path)
+num_facts = 350
+folder_path = r'C:\Users\Admin\Desktop\API_Projektwoche\src'
+file_path = os.path.join(folder_path, 'fakten.csv')
+
+os.makedirs(folder_path, exist_ok=True)
 facts_set = set()
 
-with open(file_path, mode='a', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
-    if not file_exists:
-        writer.writerow(['Fakt'])
+# CSV erstellen ohne Anführungszeichen
+with open(file_path, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(['facts'])  # Header hinzufügen
 
     facts_collected = 0
     while facts_collected < num_facts:
@@ -25,7 +27,7 @@ with open(file_path, mode='a', newline='', encoding='utf-8') as file:
             fact = response.json()['text']
             if fact not in facts_set:
                 print(f"Zufälliger Fakt: {fact}")
-                writer.writerow([fact])
+                writer.writerow([fact])  # Nur der Fakt wird gespeichert
                 facts_set.add(fact)
                 facts_collected += 1
             else:
@@ -33,4 +35,3 @@ with open(file_path, mode='a', newline='', encoding='utf-8') as file:
         else:
             print(f"Fehler beim Abrufen des Fakts: {response.status_code}. Versuche in 5 Sekunden...")
             time.sleep(5)
-
