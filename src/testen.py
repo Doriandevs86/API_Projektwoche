@@ -1,1 +1,0 @@
-'Hallo Gruppe 1 ich hab da mal was vorbereitet...'

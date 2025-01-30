@@ -1,0 +1,127 @@
+import sqlite3
+from fastapi import FastAPI, status, HTTPException, Depends
+from pydantic import BaseModel, Field
+import uvicorn
+import psycopg
+
+
+#Header für die API und eine kurze Beschreibung
+app = FastAPI(
+    title='Fun Facts App',
+    summary='Eine API zum Auffinden interessanter Fakten'
+)
+
+class Fact(BaseModel):
+    title: str = Field(default='Enter fact')
+    status: str = Field(default='Nicht gesehen')
+
+
+# Datenbankverbindung
+def get_connection():
+    return psycopg.connect('funfact_db.sql')
+
+# Begrüßung der User
+@app.get('/', status_code=status.HTTP_200_OK, tags=['Welcome'])
+def greet_user():
+     return {'message': 'Hallo Benutzer! Willkommen bei der App „Fun Facts“!'}
+
+
+# alle Fakten anzeigen
+@app.get('/facts', status_code=status.HTTP_200_OK, tags=['Get data'])
+def get_all_facts(conn=Depends(get_connection)):
+    select_query = 'SELECT * FROM facts;'
+    cursor = conn.cursor()
+    cursor.execute(select_query)
+    facts = cursor.fetchall()
+    facts_dicts = []
+
+    for fact in facts:
+        fact_dicts = {'fact_id': fact[0], 'facts': fact[1], 'status': fact[2]}
+        facts_dicts.append(fact_dicts)
+
+    return facts_dicts
+
+# Fakten nach Status filtern
+@app.get('/filter', status_code=status.HTTP_200_OK, tags=['Get data'])
+def filter_by_status(status: str, conn=Depends(get_connection)):
+
+    filter_query = 'SELECT * FROM facts WHERE status = ?'
+
+    tuple = (status, )
+    cursor = conn.cursor()
+    cursor.execute(filter_query, tuple)
+    facts = cursor.fetchall()
+
+    facts_dicts = []
+
+    for fact in facts:
+       fact_dicts = {'fact_id': fact[0], 'facts': fact[1], 'status': fact[2]}
+       facts_dicts.append(fact_dicts)
+    return facts_dicts
+
+# Pfad mit Pfadparameter
+@app.get('/facts/{fact_id}/', status_code=status.HTTP_200_OK, tags=['Get data'])
+def get_fact(fact_id: int, conn=Depends(get_connection)):
+
+    select_query = 'SELECT * FROM facts WHERE fact_id = ?;'
+
+    cursor = conn.cursor()
+    cursor.execute(select_query, (fact_id, ))
+    facts = cursor.fetchall()
+
+    for fact in facts:
+        fact_dict = {'fact_id': fact[0], 'facts': fact[1], 'status': fact[2]}
+        if fact_dict['fact_id'] == fact_id:
+            return fact_dict
+
+
+
+@app.post('/facts/', status_code=status.HTTP_201_CREATED, tags=['Controller'])
+def post_new_fact(fact: Fact, conn=Depends(get_connection)):
+    insertion_query = '''INSERT INTO facts (facts, status)
+                         VALUES (?, ?);'''
+    fact_tuple = (fact.facts, fact.status)
+
+    cursor = conn.cursor()
+    cursor.execute(insertion_query, fact_tuple)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+@app.patch('/facts/update', status_code=status.HTTP_204_NO_CONTENT, tags=['Controller'])
+def update_status(fact_id: str, conn=Depends(get_connection)):
+    update_stmt = '''
+        UPDATE facts 
+        SET status = CASE 
+            WHEN status = 'nicht gesehen' THEN 'gesehen' 
+            WHEN status = 'gesehen' THEN 'nicht gesehen' 
+            ELSE status
+        END
+        WHERE fact_id = ?;
+    '''
+    update_tuple = (fact_id,)
+
+    cursor = conn.cursor()
+    cursor.execute(update_stmt, update_tuple)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+@app.delete('/facts/delete/{fact_id}/', status_code=status.HTTP_204_NO_CONTENT, tags=['Controller'])
+def delete_fact(fact_id: int, conn=Depends(get_connection)):
+    delete_stmt = 'DELETE FROM facts WHERE fact_id = ?;'
+    fact_tuple = (fact_id, )
+    cursor = conn.cursor()
+    cursor.execute(delete_stmt, fact_tuple)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host='127.0.0.1', port=8000)
+
+
