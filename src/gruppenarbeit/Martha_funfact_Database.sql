@@ -1,4 +1,6 @@
-DROP TABLE facts;
+CREATE DATABASE fun_facts;
+
+\c fun_facts;
 
 CREATE TABLE facts
 (
