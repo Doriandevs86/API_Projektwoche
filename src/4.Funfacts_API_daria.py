@@ -1,3 +1,4 @@
+from getpass import getpass
 import psycopg2
 import os
 import uvicorn
@@ -5,15 +6,18 @@ from fastapi import FastAPI, status, HTTPException, Depends
 from pydantic import BaseModel, Field
 
 
+pw = input('Bitte gib dein Passwort ein:')
+
 def connect_to_db():
     connection = psycopg2.connect(
         host='localhost',
         port=5432,
         user='postgres',
-        password='admin',
+        password=pw,
         dbname='funfact_db'
     )
     return connection
+
 
 #Header für die API und eine kurze Beschreibung
 app = FastAPI(

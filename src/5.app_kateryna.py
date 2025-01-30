@@ -3,6 +3,7 @@ import customtkinter as ctk
 #from PIL.Image import Image
 from PIL import Image, ImageTk
 
+from src.api_handler_für_app import handle_start_button
 
 # Hauptfenster
 root = ctk.CTk()
