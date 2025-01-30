@@ -10,7 +10,7 @@ def connect_to_db():
         host='localhost',
         port=5432,
         user='postgres',
-        password='Datacraft',
+        password='admin',
         dbname='funfact_db'
     )
     return connection
@@ -51,7 +51,7 @@ def get_all_facts(conn=Depends(connect_to_db)):
 @app.get('/filter', status_code=status.HTTP_200_OK, tags=['Get data'])
 def filter_by_status(status: str, conn=Depends(connect_to_db)):
 
-    filter_query = 'SELECT * FROM facts WHERE status = ?'
+    filter_query = 'SELECT * FROM facts WHERE status = %s'
 
     tuple = (status, )
     cursor = conn.cursor()
@@ -69,7 +69,7 @@ def filter_by_status(status: str, conn=Depends(connect_to_db)):
 @app.get('/facts/{fact_id}/', status_code=status.HTTP_200_OK, tags=['Get data'])
 def get_fact(fact_id: int, conn=Depends(connect_to_db)):
 
-    select_query = 'SELECT * FROM facts WHERE fact_id = ?;'
+    select_query = 'SELECT * FROM facts WHERE fact_id = %s;'
 
     cursor = conn.cursor()
     cursor.execute(select_query, (fact_id, ))
@@ -85,7 +85,7 @@ def get_fact(fact_id: int, conn=Depends(connect_to_db)):
 @app.post('/facts/', status_code=status.HTTP_201_CREATED, tags=['Controller'])
 def post_new_fact(fact: Fact, conn=Depends(connect_to_db)):
     insertion_query = '''INSERT INTO facts (facts, status)
-                         VALUES (?, ?);'''
+                         VALUES (%s, %s);'''
     fact_tuple = (fact.facts, fact.status)
 
     cursor = conn.cursor()
@@ -105,7 +105,7 @@ def update_status(fact_id: str, conn=Depends(connect_to_db)):
             WHEN status = 'gesehen' THEN 'nicht gesehen' 
             ELSE status
         END
-        WHERE fact_id = ?;
+        WHERE fact_id = %s;
     '''
     update_tuple = (fact_id,)
 
@@ -119,7 +119,7 @@ def update_status(fact_id: str, conn=Depends(connect_to_db)):
 
 @app.delete('/facts/delete/{fact_id}/', status_code=status.HTTP_204_NO_CONTENT, tags=['Controller'])
 def delete_fact(fact_id: int, conn=Depends(connect_to_db)):
-    delete_stmt = 'DELETE FROM facts WHERE fact_id = ?;'
+    delete_stmt = 'DELETE FROM facts WHERE fact_id = %s;'
     fact_tuple = (fact_id, )
     cursor = conn.cursor()
     cursor.execute(delete_stmt, fact_tuple)
