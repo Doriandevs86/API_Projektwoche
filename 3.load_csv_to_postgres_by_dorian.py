@@ -45,4 +45,4 @@ def load_csv_to_facts_table(csv_file):
 
     print("Import abgeschlossen. Verbindung zur Datenbank geschlossen.")
 
-load_csv_to_facts_table(csv_file=r'C:\Users\Admin\Desktop\API_Projektwoche\src\fakten.csv')
+load_csv_to_facts_table(csv_file=r'/src/fakten.csv')
