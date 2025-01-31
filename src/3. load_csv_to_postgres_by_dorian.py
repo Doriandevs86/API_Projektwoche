@@ -2,12 +2,14 @@ import csv
 import psycopg2
 import os
 
+pw = input('Bitte gib dein Passwort ein:')
+
 def connect_to_db():
     return psycopg2.connect(
         host='localhost',
         port=5432,
         user='postgres',
-        password='Datacraft',
+        password=pw,
         dbname='funfact_db'
     )
 

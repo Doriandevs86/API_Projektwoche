@@ -1,11 +1,12 @@
 import psycopg2
 from psycopg2 import sql
 
+pw = input('Bitte gib dein Passwort ein:')
 
 host = "localhost"
 port = "5432"
 user = "postgres"
-password = "Datacraft"
+password = pw
 dbname = "funfact_db"
 
 # Verbindung zur PostgreSQL-Server-Datenbank herstellen (normalerweise zur 'postgres'-Datenbank)
