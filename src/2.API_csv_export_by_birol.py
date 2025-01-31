@@ -3,13 +3,8 @@ import csv
 import os
 import time
 
-'''HIER!!!!env datei anlegen!'''
 
-
-
-api_key = '1tp7yPNOP31Gano9R+Vc3w==AXWMvVp68JudOYG1'
 url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
-headers = {'Authorization': f'Bearer {api_key}'}
 
 num_facts = 350
 folder_path = r'C:\Users\Admin\Desktop\API_Projektwoche\src'
@@ -25,7 +20,7 @@ with open(file_path, mode='w', newline='', encoding='utf-8') as file:
 
     facts_collected = 0
     while facts_collected < num_facts:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url)
 
         if response.status_code == 200:
             fact = response.json()['text']

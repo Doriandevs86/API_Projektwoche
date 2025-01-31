@@ -54,36 +54,31 @@ In the left panel, under *fun_fact_db[0 of 3]*, select Default Schema.
 
 Open the file *2.API_csv_export_by_birol.py* and run it.
 
-#### **5. Create the .env File** ####
-
-Right-click on the *src* folder in PyCharm and create a *.env* file.
-Enter your API key in the *.env* file. You can generate an API key at uselessfacts.jsph.pl.
-
-#### **6. Check the CSV File** ####
+#### **5. Check the CSV File** ####
 
 After the export is complete, you will find the *fakten.csv* file in the *src* folder.
 
-#### **7. Load CSV Data into PostgreSQL** ####
+#### **6. Load CSV Data into PostgreSQL** ####
 
 Open the file *3.load_csv_to_postgres_by_dorian.py* and run it to load the fun fact data into the database table.
 
-#### **8. Run the Fun Fact API** ####
+#### **7. Run the Fun Fact API** ####
 
 Open and execute the file *4.Funfacts_API_by_daria.py*.
 
-#### **9. Start the API Server** ####
+#### **8. Start the API Server** ####
 
 Enter your password to start the API server.
 
-#### **10. Launch the Application** ####
+#### **9. Launch the Application** ####
 
 Open and run *5.app_by_katharina.py*.
 
-#### **11. Access the UI** ####
+#### **10. Access the UI** ####
 
 The user interface will open on your desktop.
 
-#### **12. Get a Random Fun Fact** ####
+#### **11. Get a Random Fun Fact** ####
 
 To pick a random fun fact, simply click the **Start** button.
 
