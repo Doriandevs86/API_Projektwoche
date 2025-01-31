@@ -4,9 +4,10 @@ import os
 import uvicorn
 from fastapi import FastAPI, status, HTTPException, Depends
 from pydantic import BaseModel, Field
+import pyautogui
 
 
-pw = input('Bitte gib dein Passwort ein:')
+pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
 
 def connect_to_db():
     connection = psycopg2.connect(
