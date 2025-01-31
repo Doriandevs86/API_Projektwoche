@@ -1,91 +1,78 @@
-# **API Project Week** #
-This project was developed by Katharina, Daria, Martha, Birol, and Dorian. It uses an API and the CTk framework in Python to deliver fun facts from an API and display them in a simple desktop application.
+# **API Project Week** #  
+This project was developed by Katharina, Daria, Martha, Birol, and Dorian. It uses an API and the CTk framework in Python to deliver fun facts from an API and display them in a simple desktop application.  
 
-## **Project Description** ##
-This project aims to fetch random fun facts using an external API and store them in a PostgreSQL database. The data is then displayed through a graphical user interface (UI) built with CustomTkinter (CTk).
+## **Project Description** ##  
+This project aims to fetch random fun facts using an external API, store them in a PostgreSQL database, and display them through a graphical user interface (UI) built with CustomTkinter (CTk). The application allows users to filter facts by their status (seen or unseen) and automatically updates the status after displaying a fact.  
 
-![Image not found (404)](src/images/ReadMe_picture.png)
+![Image not found (404)](src/images/ReadMe_picture.png)  
 
-## **Installation** ##
-### To set up the project locally, follow these steps: ###
+## **Installation** ##  
+### To set up the project locally, follow these steps: ###  
 
-#### **1. Clone the repository** ####
+#### **1. Download the Project** ####  
+- Click the green **"Code"** button on the GitHub repository page and select **"Download ZIP"**.  
+- Extract the ZIP file to a folder on your computer.  
 
-*git clone hthttps://github.com/Doriandevs86/API_Projektwoche*
+#### **2. Install Python** ####  
+- If you don't have Python installed, download and install it from [python.org](https://www.python.org/).  
+- During installation, make sure to check the box **"Add Python to PATH"**.  
 
-#### **2. Navigate to the project directory** ####
+#### **3. Install Required Python Modules** ####  
+- Open the project in an IDE like **PyCharm** or **VS Code**.  
+- Install the required modules using the following steps:  
+  1. Open the terminal in your IDE.  
+  2. Copy and paste the following commands one by one and press **Enter**:  
+     ```
+     pip install psycopg2  
+     pip install requests  
+     pip install customtkinter  
+     pip install fastapi  
+     pip install uvicorn  
+     pip install pyautogui  
+     ```  
+  - Alternatively, you can install the modules using the IDE's package manager (e.g., in PyCharm: **File > Settings > Project > Python Interpreter > +**).  
 
-*cd API_Projektwoche*
+#### **4. Set Up PostgreSQL** ####  
+- Download and install PostgreSQL from [postgresql.org](https://www.postgresql.org/).  
+- During installation, remember the **username** and **password** you set for the PostgreSQL database.  
 
-## **Setup and Usage Instructions** ##
+## **Setup and Usage Instructions** ##  
+Please follow the steps below to set up and run the project correctly:  
 
-Please follow the steps below to set up and run the project correctly:
+#### **1. Create the Database** ####  
+- Open and execute the file `1.create_fun_facts_db_by_martha.py`.  
+- A password prompt will appear. Enter your **PostgreSQL password**.  
+- This script will create the `funfact_db` database and the `facts` table.  
 
-#### **1. Create the Database** ####
+#### **2. Export API Data to CSV** ####  
+- Open and execute the file `2.API_csv_export_by_birol.py`.  
+- This script will fetch 350 random fun facts from the API and save them in the `src/fakten.csv` file.  
 
-Open the *src* folder and execute the file *1.create_fun_facts_db_by_martha.py.*
-PyCharm should automatically open. Make sure all necessary modules are installed. If not, open the Python console and run the following command to install the required module:
-*pip install psycopg2*
+#### **3. Load CSV Data into PostgreSQL** ####  
+- Open and execute the file `3.load_csv_to_postgres_by_dorian.py`.  
+- A password prompt will appear. Enter your **PostgreSQL password**.  
+- This script will load the fun facts from the CSV file into the `facts` table.  
 
-Enter your PostgresPasswort to run the file
+#### **4. Run the Fun Fact API** ####  
+- Open and execute the file `4.Funfacts_API_by_daria.py`.  
+- A password prompt will appear. Enter your **PostgreSQL password**.  
+- This will start the FastAPI server on `http://localhost:8000`.  
 
-#### **2. Connect to the Database** ####
+#### **5. Launch the Application** ####  
+- Open and execute the file `5.app_by_katharina.py`.  
+- The user interface will open on your desktop.  
 
-Open your PostgreSQL database and connect to *Postgre@localhost.**
-Enter your username and password, then test the connection before clicking **Apply**.
+#### **6. Get a Random Fun Fact** ####  
+- To pick a random fun fact, simply click the **Start** button.  
+- Use the radio buttons to filter facts by their status (seen or unseen).  
 
-#### **3. Open the Fun Fact Database** ####
+## **License** ##  
+This project is licensed under the MIT License - see the LICENSE file for details.  
 
-After a successful connection, you will see *postgres@localhost[1 of xx]*. Double-click on it and select *fun_fact_db*.
-In the left panel, under *fun_fact_db[0 of 3]*, select Default Schema.
-
-#### **4. Export API Data** ####
-
-Open the file *2.API_csv_export_by_birol.py* and run it.
-
-#### **5. Check the CSV File** ####
-
-After the export is complete, you will find the *fakten.csv* file in the *src* folder.
-
-#### **6. Load CSV Data into PostgreSQL** ####
-
-Open the file *3.load_csv_to_postgres_by_dorian.py*. Enter your password again and run it to load the fun fact data into the database table.
-
-#### **7. Run the Fun Fact API** ####
-
-Open and execute the file *4.Funfacts_API_by_daria.py*.
-
-#### **8. Start the API Server** ####
-
-Enter your password to start the API server.
-
-#### **9. Launch the Application** ####
-
-Open and run *5.app_by_katharina.py*.
-
-#### **10. Access the UI** ####
-
-The user interface will open on your desktop.
-
-#### **11. Get a Random Fun Fact** ####
-
-To pick a random fun fact, simply click the **Start** button.
-
-## Contributing ##
-If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. Make sure to follow these guidelines:
-
-- Write clear commit messages.
-- Ensure your code follows the existing style.
-- Test your changes thoroughly.
-
-## License ## 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact ##
-For any questions, you can reach out to the developers:
-
-- Kateryna: kateryna@example.com
-- Daria: daria@example.com
-- Martha: martha@example.com
-- Birol: birol@example.com
-- Dorian: dorian@example.com
+## **Contact** ##  
+For any questions, you can reach out to the developers:  
+- Kateryna: kateryna@example.com  
+- Daria: daria@example.com  
+- Martha: martha@example.com  
+- Birol: birol@example.com  
+- Dorian: dorian@example.com  
