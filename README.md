@@ -84,7 +84,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact ##
 For any questions, you can reach out to the developers:
 
-- Katharina: katharina@example.com
+- Kateryna: kateryna@example.com
 - Daria: daria@example.com
 - Martha: martha@example.com
 - Birol: birol@example.com
