@@ -26,8 +26,8 @@ app = FastAPI(
 )
 
 class Fact(BaseModel):
-    title: str = Field(default='Enter fact')
-    status: str = Field(default='Nicht gesehen')
+    facts: str = Field(default='Enter fact')
+    status: str = Field(default='nicht gesehen')
 
 
 # Begrüßung der User

@@ -42,7 +42,7 @@ cursor.execute("""
     CREATE TABLE facts (
         fact_id SERIAL PRIMARY KEY,
         facts TEXT,
-        status BOOLEAN DEFAULT FALSE
+        status TEXT DEFAULT 'nicht geesehen'
     );
 """)
 
