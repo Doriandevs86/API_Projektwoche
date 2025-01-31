@@ -1,10 +1,13 @@
 import csv
+from getpass import getpass
 import psycopg2
 import os
+import pyautogui
 
-pw = input('Bitte gib dein Passwort ein:')
 
-def connect_to_db():
+pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
+
+def connect_to_db(pw):
     return psycopg2.connect(
         host='localhost',
         port=5432,
@@ -42,4 +45,4 @@ def load_csv_to_facts_table(csv_file):
 
     print("Import abgeschlossen. Verbindung zur Datenbank geschlossen.")
 
-load_csv_to_facts_table(csv_file='fakten.csv')
+load_csv_to_facts_table(csv_file=r'C:\Users\Admin\Desktop\API_Projektwoche\src\fakten.csv')

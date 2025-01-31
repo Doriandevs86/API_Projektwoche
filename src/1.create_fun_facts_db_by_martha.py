@@ -1,7 +1,9 @@
 import psycopg2
 from psycopg2 import sql
+import pyautogui
 
-pw = input('Bitte gib dein Passwort ein:')
+
+pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
 
 host = "localhost"
 port = "5432"
