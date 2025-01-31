@@ -40,7 +40,7 @@ root.title('Fun Fact Generator')
 root.resizable( width=False, height=False)
 
 # Hintergrund
-bg_image=Image.open(r'C:\Users\Admin\Desktop\API_Projektwoche\src\images\hintergrund6.png')
+bg_image=Image.open(r'/src/images/hintergrund6.png')
 bg_ctk_image=ctk.CTkImage(light_image=bg_image,size=(600,300))
 bg_label = ctk.CTkLabel(root, image = bg_ctk_image, text = "")
 bg_label.place(relwidth=1, relheight=1)
