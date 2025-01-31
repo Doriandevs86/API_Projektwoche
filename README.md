@@ -11,24 +11,11 @@ This project aims to fetch random fun facts using an external API and store them
 
 #### **1. Clone the repository** ####
 
-*git clone https://github.com/yourusername/API_Projektwoche.git*
+*git clone hthttps://github.com/Doriandevs86/API_Projektwoche*
 
 #### **2. Navigate to the project directory** ####
 
 *cd API_Projektwoche*
-
-#### **3. Create a virtual environment (optional but recommended)** ####
-
-*python -m venv venv*
-
-#### **4. Activate the virtual environment** ####
-
-For Windows: *venv\Scripts\activate*
-For Mac/Linux: *source venv/bin/activate*
-
-#### **5. Install required dependencies** ####
-
-*pip install -r requirements.txt*
 
 ## **Setup and Usage Instructions** ##
 
@@ -39,6 +26,8 @@ Please follow the steps below to set up and run the project correctly:
 Open the *src* folder and execute the file *1.create_fun_facts_db_by_martha.py.*
 PyCharm should automatically open. Make sure all necessary modules are installed. If not, open the Python console and run the following command to install the required module:
 *pip install psycopg2*
+
+Enter your PostgresPasswort to run the file
 
 #### **2. Connect to the Database** ####
 
@@ -60,7 +49,7 @@ After the export is complete, you will find the *fakten.csv* file in the *src* f
 
 #### **6. Load CSV Data into PostgreSQL** ####
 
-Open the file *3.load_csv_to_postgres_by_dorian.py* and run it to load the fun fact data into the database table.
+Open the file *3.load_csv_to_postgres_by_dorian.py*. Enter your password again and run it to load the fun fact data into the database table.
 
 #### **7. Run the Fun Fact API** ####
 
