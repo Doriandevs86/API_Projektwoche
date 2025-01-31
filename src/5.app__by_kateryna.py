@@ -1,9 +1,26 @@
-import ImageTk
 import customtkinter as ctk
-#from PIL.Image import Image
-from PIL import Image, ImageTk
+from PIL import Image
+import requests
 
-from src.api_handler_für_app import handle_start_button
+
+
+def fetch_fun_fact():
+    response = requests.get('http://localhost:8000/facts')
+
+    if response.status_code == 200:
+        response_data = response.json()
+        fact = response_data[0]
+
+        selected_option.set(fact['status'])
+
+        text_box.delete(1.0, "end")
+        text_box.insert("end", fact['facts'])
+
+    else:
+        text_box.delete(1.0,"end")
+        text_box.insert("end", "Fehler beim Abrufen des Fun Facts")
+
+
 
 # Hauptfenster
 root = ctk.CTk()
@@ -12,7 +29,7 @@ root.title('Fun Fact Generator')
 root.resizable( width=False, height=False)
 
 # Hintergrund
-bg_image=Image.open('hintergrund6.png')
+bg_image=Image.open(r'C:\Users\Admin\Desktop\API_Projektwoche\src\images\hintergrund6.png')
 bg_ctk_image=ctk.CTkImage(light_image=bg_image,size=(600,300))
 bg_label = ctk.CTkLabel(root, image = bg_ctk_image, text = "")
 bg_label.place(relwidth=1, relheight=1)
@@ -56,7 +73,7 @@ radio_button2.grid(column=0, row=1)
 
 
 # start_button mit Command für API_Abfrage
-start_button = ctk.CTkButton(root, text='Start', fg_color='black', text_color='white')
+start_button = ctk.CTkButton(root, text='Start', fg_color='black', text_color='white', command=fetch_fun_fact)
 start_button.grid(column=1, row=1, padx=10)
 
 
