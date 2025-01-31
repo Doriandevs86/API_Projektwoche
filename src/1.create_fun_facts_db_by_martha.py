@@ -23,10 +23,9 @@ connection = psycopg2.connect(
 connection.autocommit = True
 cursor = connection.cursor()
 
-cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
-
-
-
+cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (dbname,))
+if not cursor.fetchone:
+    cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
 
 print(f"Datenbank {dbname} erfolgreich erstellt.")
 
@@ -45,11 +44,11 @@ cursor.execute("""
     CREATE TABLE facts (
         fact_id SERIAL PRIMARY KEY,
         facts TEXT,
-        status TEXT DEFAULT 'nicht geesehen'
+        status TEXT DEFAULT 'nicht gesehen'
     );
 """)
 
-print('Tabelle "facts" erfolreich erstellt')
+print('Tabelle "facts" erfolgreich erstellt')
 
 cursor.close()
 connection.close()

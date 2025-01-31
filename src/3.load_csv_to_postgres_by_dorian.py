@@ -7,7 +7,7 @@ import pyautogui
 
 pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
 
-def connect_to_db(pw):
+def connect_to_db():
     return psycopg2.connect(
         host='localhost',
         port=5432,

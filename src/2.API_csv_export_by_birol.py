@@ -6,7 +6,7 @@ import time
 
 url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
-num_facts = 350
+num_facts = 10
 folder_path = r'C:\Users\Admin\Desktop\API_Projektwoche\src'
 file_path = os.path.join(folder_path, 'fakten.csv')
 

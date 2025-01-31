@@ -5,20 +5,31 @@ import random
 
 
 def fetch_fun_fact():
-    response = requests.get('http://localhost:8000/facts')
+    status_value = selected_option.get()  # Gesehen oder nicht gesehen abrufen
+    response = requests.get(f'http://localhost:8000/filter?status={status_value}')
 
     if response.status_code == 200:
         response_data = response.json()
-        fact = response_data[1]
 
-        selected_option.set(fact['status'])
+        if response_data:
+            random_fact = random.choice(response_data)  # Zufälligen Fakt aus der Liste auswählen
+            text_box.delete(1.0, "end")
+            text_box.insert("end", random_fact['facts'])
 
-        text_box.delete(1.0, "end")
-        text_box.insert("end", fact['facts'])
+            # Status des angezeigten Fakts aktualisieren
+            fact_id = random_fact['fact_id']
+            update_response = requests.patch(f'http://localhost:8000/facts/update?fact_id={fact_id}')
 
+            if update_response.status_code != 204:
+                text_box.insert("end", "\n\nFehler beim Aktualisieren des Status.")
+        else:
+            text_box.delete(1.0, "end")
+            text_box.insert("end", "Keine passenden Fun Facts gefunden.")
     else:
-        text_box.delete(1.0,"end")
-        text_box.insert("end", "Fehler beim Abrufen des Fun Facts")
+        text_box.delete(1.0, "end")
+        text_box.insert("end", f"Keine Fun Facts mit diesem Status gefunden. (Code: {response.status_code})")
+
+
 
 
 
