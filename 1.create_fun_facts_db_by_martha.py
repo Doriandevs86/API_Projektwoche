@@ -24,7 +24,7 @@ connection.autocommit = True
 cursor = connection.cursor()
 
 cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (dbname,))
-if not cursor.fetchone:
+if not cursor.fetchone():
     cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
 
 print(f"Datenbank {dbname} erfolgreich erstellt.")
