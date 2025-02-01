@@ -2,6 +2,8 @@ import customtkinter as ctk
 from PIL import Image
 import requests
 import random
+from config import IMAGE_PATH
+
 
 
 def fetch_fun_fact():
@@ -31,19 +33,19 @@ def fetch_fun_fact():
 
 
 
-
-
 # Hauptfenster
 root = ctk.CTk()
 root.geometry('600x300')
 root.title('Fun Fact Generator')
 root.resizable( width=False, height=False)
 
+
 # Hintergrund
-bg_image=Image.open(r'/src/images/hintergrund6.png')
+bg_image=Image.open(IMAGE_PATH)
 bg_ctk_image=ctk.CTkImage(light_image=bg_image,size=(600,300))
 bg_label = ctk.CTkLabel(root, image = bg_ctk_image, text = "")
 bg_label.place(relwidth=1, relheight=1)
+
 
 # Theme für das Hauptfenster
 ctk.set_appearance_mode('dark')
@@ -63,6 +65,7 @@ text_box.grid(column=0, row=0, padx=10, pady=10)
 
 # Standartwert für radio_button_auswahl
 selected_option = ctk.StringVar(value='nicht gesehen')
+
 
 # Frame + radio_button
 radio_button_frame = ctk.CTkFrame(root, fg_color='black', corner_radius=20, border_width=15, border_color= 'white')
