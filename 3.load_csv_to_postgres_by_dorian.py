@@ -24,5 +24,5 @@ def load_csv_to_facts_table(csv_file):
     conn.close()
     print("Import abgeschlossen. Verbindung zur Datenbank geschlossen.")
 
-# Aufruf mit Argument
+# Aufruf der Funktion
 load_csv_to_facts_table(CSV_PATH)

@@ -105,7 +105,7 @@ def post_new_fact(fact: Fact, conn=Depends(connect_to_db)):
     conn.close()
 
 
-
+#Update für gesehen/nicht gesehen
 @app.patch('/facts/update', status_code=status.HTTP_200_OK, tags=['Controller'])
 def update_status(fact_id: int, conn=Depends(connect_to_db)):
     cursor = conn.cursor()
@@ -129,6 +129,33 @@ def update_status(fact_id: int, conn=Depends(connect_to_db)):
     conn.close()
 
     return {"fact_id": updated_fact[0], "facts": updated_fact[1], "status": updated_fact[2]}
+
+
+#Favouriten Endpunkt
+@app.patch('/facts/favourite', status_code=status.HTTP_200_OK, tags=['Controller'])
+
+def toggle_favourite(fact_id: int, conn=Depends(connect_to_db)):
+    cursor = conn.cursor()
+
+    update_stmt = '''
+        UPDATE facts 
+        SET status = CASE 
+            WHEN status = 'favourite' THEN 'nicht gesehen' 
+            ELSE 'favourite'
+        END
+        WHERE fact_id = %s;
+    '''
+    cursor.execute(update_stmt, (fact_id,))
+    conn.commit()
+
+    cursor.execute("SELECT * FROM facts WHERE fact_id = %s;", (fact_id,))
+    updated_fact = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return {"fact_id": updated_fact[0], "facts": updated_fact[1], "status": updated_fact[2]}
+
 
 
 # Einen Fakt löschen

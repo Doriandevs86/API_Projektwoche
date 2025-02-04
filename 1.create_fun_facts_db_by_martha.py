@@ -3,12 +3,13 @@ from psycopg2 import sql
 from config import DATABASE_CONFIG
 
 
-# Funktion zur Verbindung zur Datenbank
+
+# Funktion für Verbindung
 def connect_to_db():
     return psycopg2.connect(**DATABASE_CONFIG)
 
 
-# Funktion zum Erstellen der Datenbank, falls sie noch nicht existiert
+# Erstellt die Datenbank, falls sie noch nicht existiert
 def create_database():
     connection = connect_to_db()
     connection.autocommit = True
@@ -21,6 +22,7 @@ def create_database():
     print(f"Datenbank {DATABASE_CONFIG['dbname']} erfolgreich erstellt.")
     cursor.close()
     connection.close()
+
 
 
 # Funktion zum Erstellen der Tabelle "facts"
