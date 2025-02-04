@@ -1,18 +1,26 @@
 import uvicorn
 import psycopg2
 import random
+import pyautogui
 
 from fastapi import FastAPI, status, HTTPException, Depends
 from pydantic import BaseModel, Field
-
-from config import DATABASE_CONFIG
 
 
 
 ''' Connection '''
 
+pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
+
 def connect_to_db():
-    return  psycopg2.connect(**DATABASE_CONFIG)
+    connection = psycopg2.connect(
+        host='localhost',
+        port=5432,
+        user='postgres',
+        password=pw,
+        dbname='funfact_db'
+    )
+    return connection
 
 
 ''' API - Endpunkte '''
@@ -74,7 +82,7 @@ def filter_by_status(status: str, conn=Depends(connect_to_db)):
     return facts_dicts
 
 
-# Pfad mit Pfadparameter
+# Get Fakt via ID
 @app.get('/facts/{fact_id}/', status_code=status.HTTP_200_OK, tags=['Get data'])
 
 def get_fact(fact_id: int, conn=Depends(connect_to_db)):
@@ -90,7 +98,7 @@ def get_fact(fact_id: int, conn=Depends(connect_to_db)):
             return fact_dict
 
 
-# Neuen fakt hinzufügen
+# Neuen Fakt hinzufügen
 @app.post('/facts/', status_code=status.HTTP_201_CREATED, tags=['Controller'])
 
 def post_new_fact(fact: Fact, conn=Depends(connect_to_db)):
@@ -104,8 +112,9 @@ def post_new_fact(fact: Fact, conn=Depends(connect_to_db)):
     cursor.close()
     conn.close()
 
-# Stauts des Fakts updaten / ändern
-@app.patch('/facts/update', status_code=status.HTTP_204_NO_CONTENT, tags=['Controller'])
+
+# Status Update-Endpunt
+@app.patch('/facts/update', status_code=status.HTTP_200_OK, tags=['Controller'])
 
 def update_status(fact_id: int, conn=Depends(connect_to_db)):
     update_stmt = '''
@@ -120,28 +129,37 @@ def update_status(fact_id: int, conn=Depends(connect_to_db)):
 
     update_tuple = (fact_id,)
     cursor = conn.cursor()
-    cursor.execute(update_stmt, update_tuple)
-    conn.commit()
 
+    # Führen Sie die Update-Abfrage aus
+    try:
+        cursor.execute(update_stmt, update_tuple)
+        conn.commit()
+        print(f"Updated fact with id {fact_id}.")
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating fact: {e}")
+        raise HTTPException(status_code=500, detail="Error updating the fact.")
 
     # Abfrage des aktualisierten Fakts
     select_query = 'SELECT * FROM facts WHERE fact_id = %s;'
     cursor.execute(select_query, (fact_id,))
     updated_fact = cursor.fetchone()
-    cursor.close()
-    return {"fact_id": updated_fact[0], "facts": updated_fact[1], "status": updated_fact[2]}
 
-
-    # Abfrage des aktualisierten Fakts
-    select_query = 'SELECT * FROM facts WHERE fact_id = %s;'
-    cursor.execute(select_query, (fact_id,))
-    updated_fact = cursor.fetchone()
     cursor.close()
+
+    # Überprüfen, ob das Fakt gefunden wurde
+    if updated_fact is None:
+        print(f"No fact found with id {fact_id}.")
+        raise HTTPException(status_code=404, detail="Fact not found.")
+
+    # Debugging-Ausgabe der Werte
+    print(f"Fact fetched: {updated_fact}")
+
     return {"fact_id": updated_fact[0], "facts": updated_fact[1], "status": updated_fact[2]}
 
 
 # Zufälligen Fakt zurückgeben
-@app.get('/facts/random', status_code=status.HTTP_200_OK, tags=['Get Data'])
+@app.get('/facts/random', status_code=status.HTTP_200_OK, tags=['Get data'])
 
 def get_random_fact(conn=Depends(connect_to_db)):
     select_query = 'SELECT * FROM facts;'

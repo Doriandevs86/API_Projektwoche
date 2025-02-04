@@ -1,55 +1,49 @@
 import psycopg2
 from psycopg2 import sql
-import pyautogui
+from config import DATABASE_CONFIG
 
 
-pw = pyautogui.password('Bitte gib dein Passwort ein:', title= 'Password-Abfrage')
-
-host = "localhost"
-port = "5432"
-user = "postgres"
-password = pw
-dbname = "funfact_db"
-
-# Verbindung zur PostgreSQL-Server-Datenbank herstellen (normalerweise zur 'postgres'-Datenbank)
-connection = psycopg2.connect(
-    dbname="postgres",
-    host=host,
-    port=port,
-    user=user,
-    password=password
-)
-
-connection.autocommit = True
-cursor = connection.cursor()
-
-cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (dbname,))
-if not cursor.fetchone():
-    cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
-
-print(f"Datenbank {dbname} erfolgreich erstellt.")
-
-connection = psycopg2.connect(host=host,
-                              port=port,
-                              user=user,
-                              password=password,
-                              dbname=dbname
-)
-connection.autocommit = True
-cursor = connection.cursor()
+# Funktion zur Verbindung zur Datenbank
+def connect_to_db():
+    return psycopg2.connect(**DATABASE_CONFIG)
 
 
-cursor.execute("""
-    DROP TABLE IF EXISTS facts;
-    CREATE TABLE facts (
-        fact_id SERIAL PRIMARY KEY,
-        facts TEXT,
-        status TEXT DEFAULT 'nicht gesehen'
-    );
-""")
+# Funktion zum Erstellen der Datenbank, falls sie noch nicht existiert
+def create_database():
+    connection = connect_to_db()
+    connection.autocommit = True
+    cursor = connection.cursor()
 
-print('Tabelle "facts" erfolgreich erstellt')
+    cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (DATABASE_CONFIG["dbname"],))
+    if not cursor.fetchone():
+        cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(DATABASE_CONFIG["dbname"])))
 
-cursor.close()
-connection.close()
+    print(f"Datenbank {DATABASE_CONFIG['dbname']} erfolgreich erstellt.")
+    cursor.close()
+    connection.close()
 
+
+# Funktion zum Erstellen der Tabelle "facts"
+def create_facts_table():
+    connection = connect_to_db()
+    connection.autocommit = True
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        DROP TABLE IF EXISTS facts;
+        CREATE TABLE facts (
+            fact_id SERIAL PRIMARY KEY,
+            facts TEXT,
+            status TEXT DEFAULT 'nicht gesehen'
+        );
+    """)
+
+    print('Tabelle "facts" erfolgreich erstellt.')
+    cursor.close()
+    connection.close()
+
+
+# Hauptausführung
+if __name__ == "__main__":
+    create_database()
+    create_facts_table()
