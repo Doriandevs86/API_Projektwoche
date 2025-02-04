@@ -9,7 +9,7 @@ from config import CSV_PATH
 url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
 # Anzahl der Fakten die gesucht werden sollen
-num_facts = 356
+num_facts = 365
 
 file_path = CSV_PATH
 os.makedirs(os.path.dirname(CSV_PATH), exist_ok=True)

@@ -25,7 +25,8 @@ def fetch_fun_fact():
                 text_box.insert("end", random_fact['facts'])
 
                 # Verwende textwrap, um den Text zu formatieren
-                wrapped_text = textwrap.fill(random_fact['facts'], width=150)  # Breite anpassen je nach gewünschter Länge
+                wrapped_text = textwrap.fill(random_fact['facts'], width=150)
+                text_box.delete(1.0, "end")
                 text_box.insert("end", wrapped_text)
 
                 # Status des angezeigten Fakts aktualisieren
