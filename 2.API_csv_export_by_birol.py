@@ -3,14 +3,16 @@ import csv
 import os
 import time
 
+from config import CSV_PATH
 
+# API_URL
 url = 'https://uselessfacts.jsph.pl/api/v2/facts/random'
 
-num_facts = 10
-folder_path = r'/src'
-file_path = os.path.join(folder_path, 'fakten.csv')
+# Anzahl der Fakten die gesucht werden sollen
+num_facts = 356
 
-os.makedirs(folder_path, exist_ok=True)
+file_path = CSV_PATH
+os.makedirs(os.path.dirname(CSV_PATH), exist_ok=True)
 facts_set = set()
 
 # CSV erstellen ohne Anführungszeichen
