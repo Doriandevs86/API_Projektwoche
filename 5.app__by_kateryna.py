@@ -16,8 +16,8 @@ current_fact_id = None
 
 # Funktion zum Abrufen eines Fun Facts
 def fetch_fun_fact():
-    global current_fact_id  # Auf die globale Variable zugreifen
-    status_value = selected_option.get()  # Gesehen oder nicht gesehen abrufen
+    global current_fact_id
+    status_value = selected_option.get()
 
     response = requests.get(f'http://localhost:8000/filter?status={status_value}')
     if response.status_code == 200:
@@ -48,9 +48,6 @@ def fetch_fun_fact():
         text_box.insert("end", f"Keine Fun Facts mit diesem Status gefunden. (Code: {response.status_code})")
 
 
-
-
-
 # Funktion zum Wechseln des Status zwischen "favourite" und "nicht gesehen"
 def toggle_favourite():
     global current_fact_id  # Auf die fact_id zugreifen
@@ -72,11 +69,6 @@ def toggle_favourite():
     else:
         text_box.delete(1.0, "end")
         text_box.insert("end", f"Fehler beim Aktualisieren des Status (Code: {response.status_code})")
-
-
-
-
-
 
 
 def get_funfact_stats():
@@ -123,7 +115,6 @@ def toggle_statistics():
         stats_label.grid(column=1, row=1, padx=10, pady=10)  # Statistik einblenden
 
 
-
 # Hauptfenster
 root = ctk.CTk()
 root.geometry('600x300')
@@ -145,8 +136,6 @@ ctk.set_default_color_theme('dark-blue')
 
 ''' FRAMES '''
 
-
-
 # Frame für die Textbox
 text_frame = ctk.CTkFrame(root, width=300, height=150, corner_radius=20, fg_color='black')
 text_frame.grid(column=0, row=0, padx=10, pady=10)
@@ -159,8 +148,6 @@ option_frame.grid(column=0, row=1, padx=10, pady=10)
 
 ''' Textfenster '''
 
-
-
 # Textfenster auf dem die fun_facts wiedergegeben werden
 text_box = ctk.CTkTextbox(text_frame, width=280, height=150, corner_radius=20 , fg_color='black', text_color='white')
 text_box.grid(column=0, row=0, padx=10, pady=10)
@@ -170,12 +157,10 @@ text_box.configure(wrap="word")
 # Statistik-Fenster (anfangs versteckt)
 stats_label = ctk.CTkLabel(root, text="", fg_color="black", text_color="white", corner_radius=20)
 stats_label.grid(padx=10, pady=10)
-stats_label.grid_remove()  # Verstecken
+stats_label.grid_remove()
 
 
 ''' BUTTONS '''
-
-
 
 # Standartwert für dropdown_auswahl
 selected_option = ctk.StringVar(value='nicht gesehen')
