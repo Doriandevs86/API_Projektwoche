@@ -4,7 +4,7 @@ This project was developed by Katharina, Daria, Martha, Birol, and Dorian. It us
 ## **Project Description** ##  
 This project aims to fetch random fun facts using an external API, store them in a PostgreSQL database, and display them through a graphical user interface (UI) built with CustomTkinter (CTk). The application allows users to filter facts by their status (seen or unseen) and automatically updates the status after displaying a fact.  
 
-![Image not found (404)](src/images/ReadMe_picture.png)  
+![Image not found (404)](src/images/README_Screenshot.png)  
 
 ## **Installation** ##  
 ### To set up the project locally, follow these steps: ###  
